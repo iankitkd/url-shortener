@@ -1,7 +1,8 @@
 {
-  "name": "db",
+  "name": "@shortener/db",
   "version": "1.0.0",
   "description": "",
+  "private": "true",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "exports": {
