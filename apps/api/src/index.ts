@@ -1,8 +1,19 @@
-import { buildApp } from "./app.js";
+import { createServer } from './app.js';
 
-const app = buildApp();
-const PORT = 3000;
+async function bootstrap() {
+  try {
+    const app = await createServer();
 
-app.listen({ port: PORT }, () => {
-  console.log(`API running on port ${PORT}`);
-});
+    const port = Number(process.env.PORT ?? 3000);
+    const host = process.env.HOST ?? '0.0.0.0';
+
+    await app.listen({ port, host });
+
+    app.log.info(`API running on http://${host}:${port}`);
+  } catch (err) {
+    console.error('Failed to start server', err);
+    process.exit(1);
+  }
+}
+
+bootstrap();

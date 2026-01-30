@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { shortUrlRoutes } from "./modules/short-url/shortUrl.routes.js";
+import { registerShortUrlModule } from "./modules/short-url/shortUrl.module.js";
 
-export function registerRoutes(app: FastifyInstance) {
-  app.register(shortUrlRoutes);
+export async function apiRoutes(app: FastifyInstance) {
+  await registerShortUrlModule(app);
 }
