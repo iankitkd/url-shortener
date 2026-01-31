@@ -1,11 +1,9 @@
 import { Redis } from "ioredis";
 
 const redisUrl = process.env.REDIS_URL!;
-const prefix = process.env.REDIS_PREFIX ?? "app";
 
 export const redis = new Redis(redisUrl, {
-  keyPrefix: `${prefix}:`,
-  maxRetriesPerRequest: 3,
+  maxRetriesPerRequest: null,
   enableOfflineQueue: false,
 });
 

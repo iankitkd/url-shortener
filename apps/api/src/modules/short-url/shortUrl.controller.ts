@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { ShortUrlService } from "./shortUrl.service.js";
+import { clickQueue } from "@repo/queue";
 
 export class ShortUrlController {
   constructor(private readonly service: ShortUrlService) {}
@@ -46,12 +47,18 @@ export class ShortUrlController {
     req: FastifyRequest<{ Params: { code: string } }>,
     reply: FastifyReply,
   ) => {
-    const url = await this.service.resolve(req.params.code);
+    const result = await this.service.resolve(req.params.code);
 
-    if (!url) {
+    if (!result) {
       return reply.code(404).send({ message: "Short URL not found" });
     }
 
-    return reply.redirect(url, 302);
+    await clickQueue.add('click', {
+      shortUrlId: result.id,
+      ip: req.ip,
+      userAgent: req.headers['user-agent'],
+    });
+
+    return reply.redirect(result.originalUrl, 302);
   };
 }

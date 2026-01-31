@@ -18,15 +18,21 @@ export class ShortUrlService {
     return normalized;
   }
 
-  async resolve(code: string): Promise<string | null> {
+  async resolve(code: string): Promise<{id: string, originalUrl: string} | null> {
     const cached = await shortUrlCache.get(code);
     if (cached) return cached;
 
     const record = await this.repo.findByCode(code);
     if (!record) return null;
 
-    await shortUrlCache.set({ code, url: record.originalUrl });
-    return record.originalUrl;
+    const value = {
+      id: record.id,
+      originalUrl: record.originalUrl,
+    }
+
+    await shortUrlCache.set(code, value);
+    
+    return value;
   }
   
   async getByCode(code: string): Promise<ShortUrl | null> {

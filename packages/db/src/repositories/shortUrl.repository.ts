@@ -12,9 +12,14 @@ export class ShortUrlRepository {
   }) {
     return prisma.shortUrl.create({ data });
   }
+
+  increaseClicksCount(shortUrlId: string) {
+    return prisma.shortUrl.update({
+      where: { id: shortUrlId },
+      data: { clicks: { increment: 1 } },
+    });
+  }
 }
-
-
 
 // export class ShortUrlRepository {
 //   constructor(private readonly prisma: PrismaClient) {}

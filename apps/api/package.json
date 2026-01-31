@@ -24,6 +24,7 @@
     "@fastify/rate-limit": "^10.3.0",
     "@repo/cache": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/queue": "workspace:*",
     "fastify": "^5.7.2",
     "nanoid": "^5.1.6"
   },
