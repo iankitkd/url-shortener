@@ -26,7 +26,10 @@ export class ShortUrlController {
     });
   };
 
-  getShortUrl = async (req: FastifyRequest<{ Params: {code: string} }>, reply: FastifyReply) => {
+  getShortUrl = async (
+    req: FastifyRequest<{ Params: { code: string } }>,
+    reply: FastifyReply,
+  ) => {
     const { code } = req.params;
 
     const shortUrl = await this.service.getByCode(code);
@@ -41,7 +44,7 @@ export class ShortUrlController {
       shortUrl: `${process.env.BASE_URL}/${shortUrl.shortCode}`,
       createdAt: shortUrl.createdAt,
     });
-  }
+  };
 
   redirect = async (
     req: FastifyRequest<{ Params: { code: string } }>,
@@ -53,10 +56,10 @@ export class ShortUrlController {
       return reply.code(404).send({ message: "Short URL not found" });
     }
 
-    await clickQueue.add('click', {
+    await clickQueue.add(`shortUrl:${result.id}`, {
       shortUrlId: result.id,
       ip: req.ip,
-      userAgent: req.headers['user-agent'],
+      userAgent: req.headers["user-agent"],
     });
 
     return reply.redirect(result.originalUrl, 302);

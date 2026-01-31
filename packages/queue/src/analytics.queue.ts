@@ -1,16 +1,10 @@
 import { Queue } from 'bullmq';
 import { queueConnection } from './connection.js';
 
-export const CLICK_QUEUE_NAME = 'click-events';
-export const CLICK_JOB_NAME = 'click-job';
+export const ANALYTICS_QUEUE_NAME = 'analytics-queue';
+export const ANALYTICS_JOB_NAME = 'analytics-job';
 
-export interface ClickJobData {
-  shortUrlId: string;
-  ip?: string;
-  userAgent?: string;
-}
-
-export const clickQueue = new Queue<ClickJobData>(CLICK_QUEUE_NAME, {
+export const analyticsQueue = new Queue(ANALYTICS_QUEUE_NAME, {
   connection: queueConnection,
   defaultJobOptions: {
     removeOnComplete: true,

@@ -1,8 +1,10 @@
-import { prisma } from "../client.js";
+import { PrismaClient } from "@prisma/client/extension";
 
 export class ShortUrlRepository {
+  constructor (private readonly prisma: PrismaClient) {}
+  
   findByCode(shortCode: string) {
-    return prisma.shortUrl.findUnique({ where: { shortCode } });
+    return this.prisma.shortUrl.findUnique({ where: { shortCode } });
   }
 
   create(data: {
@@ -10,11 +12,11 @@ export class ShortUrlRepository {
     originalUrl: string;
     expiresAt?: Date | null;
   }) {
-    return prisma.shortUrl.create({ data });
+    return this.prisma.shortUrl.create({ data });
   }
 
   increaseClicksCount(shortUrlId: string) {
-    return prisma.shortUrl.update({
+    return this.prisma.shortUrl.update({
       where: { id: shortUrlId },
       data: { clicks: { increment: 1 } },
     });

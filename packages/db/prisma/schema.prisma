@@ -13,8 +13,8 @@ model ShortUrl {
   originalUrl String
   createdAt   DateTime     @default(now())
   expiresAt   DateTime?
-  clicks      Int          @default(0)
   clickEvents ClickEvent[]
+  clickAnalyticsDaily ClickAnalyticsDaily[]
 
   @@index([shortCode])
 }
@@ -27,4 +27,17 @@ model ClickEvent {
   createdAt  DateTime @default(now())
 
   shortUrl ShortUrl @relation(fields: [shortUrlId], references: [id])
+}
+
+model ClickAnalyticsDaily {
+  id             String   @id @default(cuid())
+  shortUrlId     String
+  date           DateTime
+  totalClicks    Int      @default(0)
+  uniqueVisitors Int      @default(0)
+
+  shortUrl ShortUrl @relation(fields: [shortUrlId], references: [id])
+
+  @@unique([shortUrlId, date])
+  @@index([shortUrlId])
 }
