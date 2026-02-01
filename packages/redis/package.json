@@ -1,20 +1,17 @@
 {
-  "name": "@repo/cache",
+  "name": "@repo/redis",
   "version": "1.0.0",
   "description": "",
-  "private": "true",
+  "main": "src/index.js",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    ".": "./src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.28.1",
   "dependencies": {
-    "@repo/redis": "workspace:*"
+    "ioredis": "^5.9.2"
   }
 }

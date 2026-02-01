@@ -1,5 +1,5 @@
 import { cacheKeys } from './keys.js';
-import { redis } from './redis.js';
+import { redis } from './connection.js';
 
 export interface CachedShortUrl {
   id: string;

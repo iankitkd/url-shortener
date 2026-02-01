@@ -12,6 +12,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.28.1",
   "dependencies": {
-    "@repo/cache": "workspace:*"
+    "@repo/redis": "workspace:*"
   }
 }

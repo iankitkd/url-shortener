@@ -1,3 +1,3 @@
-import { redis } from '@repo/cache';
+import { redis } from '@repo/redis';
 
 export const queueConnection = redis;
